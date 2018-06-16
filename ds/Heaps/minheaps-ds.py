@@ -1,3 +1,5 @@
+# Based on my understanding only, no implementation seen #
+
 # Heap Formulae #
 '''
 left = i * 2
