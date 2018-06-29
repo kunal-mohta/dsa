@@ -8,7 +8,7 @@ using namespace std;
 
 class Stack {
   private:
-    static constexpr int maxStackSize = 100; //compile time variable
+    static const int maxStackSize = 100; //compile time variable
 
   public:
     int stack[maxStackSize];
