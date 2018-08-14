@@ -5,9 +5,10 @@ Learning Data Structures and Algorithms (major sources - hackerrank and CLRS)
 - Heaps
 - Stacks
 - Queues
-- Linked List
-- Trees
+- Linked Lists
 - Hash Tables
+- Trees
+    - Binary Search Trees
 
 ## Algorithms
 - Heap Sort
