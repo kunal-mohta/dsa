@@ -63,6 +63,43 @@ class BinarySearchTree {
 
         return tmp;
     }
+
+    TreeNode *recursiveSearch (TreeNode* start, int val) {
+        if (start == nullptr) {
+            std::cout<<"Value not found in the tree"<<std::endl;
+            return nullptr;
+        }
+        else {
+            if (val == start->value) {
+                return start;
+            }
+            else if (val >= start->value) {
+                return recursiveSearch(start->right, val);
+            }
+            else {
+                return recursiveSearch(start->left, val);
+            }
+        }
+    }
+
+    TreeNode *iterativeSearch (int val) {
+        TreeNode *tmp = root;
+
+        while (tmp) {
+            if (val == tmp->value) {
+                return tmp;
+            }
+            else if (val >= tmp->value) {
+                tmp = tmp->right;
+            }
+            else {
+                tmp = tmp->left;
+            }
+        }
+
+        std::cout<<"Value not found in the tree"<<std::endl;
+        return nullptr;
+    }
 };
 
 int main () {
@@ -75,4 +112,6 @@ int main () {
     std::cout<<(t.root->left->value)<<std::endl;
     std::cout<<t.minimum()->value<<std::endl;
     std::cout<<t.maximum()->value<<std::endl;
+    std::cout<<t.recursiveSearch(t.root, 1)->value<<std::endl;
+    std::cout<<t.iterativeSearch(2)->value<<std::endl;
 }
