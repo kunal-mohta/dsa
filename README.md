@@ -11,12 +11,16 @@ Learning Data Structures and Algorithms (major sources - hackerrank and CLRS)
     - Binary Search Trees
 
 ## Algorithms
-- Heap Sort
-- Quick Sort
+- Sorting
+    - Heap Sort
+    - Quick Sort
 - Binary Searching
 - Bit Manipulation
-  - Masking
-  - Bit array
-  
+    - Masking
+    - Bit array
+- Graph Algos
+    - Breadth First Search (BFS)
+    - Depth First Search (DFS)
+
 ## Classic Problems
 - Towers of Hanoi
