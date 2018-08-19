@@ -14,14 +14,10 @@ class Node {
         }
 
         void addAdj (Node *newAdjNode) {
-            newAdjNode->parent = this;
             Adj.push_back(newAdjNode);
         }
 
         void assignAdjs (std::vector <Node *> nodes) {
-            for (int i = 0; i < nodes.size(); i++) {
-                nodes[i]->parent = this;
-            }
             Adj = nodes;
         }
 };
@@ -29,13 +25,12 @@ class Node {
 class Queue {
     public:
         std::vector <Node*> queue;
-        int head = -1, tail = -2;
+        int head = 0, tail = -1;
 
         void enqueue (Node *newNode) {
             queue.push_back(newNode);
             if (isEmpty()) {
-                head = 0;
-                tail = 0;
+                tail = head + 1;
             }
             else {
                 tail = tail + 1;
@@ -84,35 +79,29 @@ class Queue {
 };
 
 void bfs (Node *start) {
-    std::vector <Node *> visitOrder;
+    start->color = "gray";
+    int time = 0;
 
     Queue q;
     q.enqueue(start);
-    start->color = "gray";
-    start->dist = 0;
 
-    // while (!q.isEmpty()) {
-        Node *u = q.dequeue();
-        // q.printQueue();
-    //     std::cout<<u->Adj[0]->value<<std::endl;
-
+    while (!q.isEmpty()) {
+        Node* u = q.dequeue();
+        std::cout<<u->value<<std::endl;
         for (int i = 0; i < u->Adj.size(); i++) {
-            Node *v = u->Adj[i];
-            if (v->color == "white") {
-                // std::cout<<v->value<<std::endl;
+            if (u->Adj[i]->color == "white") {
+                time++;
+
+                Node *v = u->Adj[i];
                 q.enqueue(v);
-                q.peek();
+                // q.printQueue();
+                v->dist = time;
                 v->color = "gray";
-                // v->dist = v->parent->dist + 1;
+                v->parent = u;
             }
         }
-
-    //     u->color = "black";
-    //     // std::cout<<u->value<<std::endl;
-    //     visitOrder.push_back(u);
-    // }
-
-
+        u->color = "black";
+    }
 };
 
 int main () {
@@ -156,4 +145,16 @@ int main () {
     // for (int i = 0; i < visitOrder.size(); i++) {
     //     std::cout<<visitOrder[i]->value<<std::endl;
     // }
+
+    // Queue q;
+    // q.enqueue(one);
+    // q.enqueue(two);
+    // q.dequeue();
+    // q.enqueue(three);
+    // q.dequeue();
+    // q.dequeue();
+    // q.dequeue();
+    // q.enqueue(one);
+
+    // q.printQueue();
 }

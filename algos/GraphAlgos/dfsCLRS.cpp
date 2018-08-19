@@ -15,14 +15,10 @@ class Node {
         }
 
         void addAdj (Node *newAdjNode) {
-            newAdjNode->parent = this;
             Adj.push_back(newAdjNode);
         }
 
         void assignAdjs (std::vector <Node *> nodes) {
-            for (int i = 0; i < nodes.size(); i++) {
-                nodes[i]->parent = this;
-            }
             Adj = nodes;
         }
 };
