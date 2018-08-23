@@ -21,6 +21,9 @@ Learning Data Structures and Algorithms (major sources - hackerrank and CLRS)
 - Graph Algos
     - Breadth First Search (BFS)
     - Depth First Search (DFS)
+    - Minimum Spanning Trees
+        - Kruskal's
+        - Prim's
 
 ## Classic Problems
 - Towers of Hanoi
