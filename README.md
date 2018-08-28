@@ -24,6 +24,8 @@ Learning Data Structures and Algorithms (major sources - hackerrank and CLRS)
     - Minimum Spanning Trees
         - Kruskal's
         - Prim's
+    - All-Pairs Shortest paths
+        - Floyd-Warshall
 
 ## Classic Problems
 - Towers of Hanoi
