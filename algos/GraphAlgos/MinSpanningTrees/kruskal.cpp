@@ -81,16 +81,11 @@ void kruskal (std::vector<Edge *> &edges, int totalVertices) {
     int totalCost = 0;
 
     for (int i = 0; i < edges.size(); i++) {
-        if (visitedVertices.size() == totalVertices) {
-            break;
-        }
-        else {
-            if (isEdgeSafe(edges[i])) {
-                totalCost += edges[i]->weight;
-                makeTreeEdge(edges[i]);
-                visitedVertices.push_back(edges[i]->vertices[0]);
-                visitedVertices.push_back(edges[i]->vertices[1]);
-            }
+        if (isEdgeSafe(edges[i])) {
+            totalCost += edges[i]->weight;
+            makeTreeEdge(edges[i]);
+            visitedVertices.push_back(edges[i]->vertices[0]);
+            visitedVertices.push_back(edges[i]->vertices[1]);
         }
     }
 
