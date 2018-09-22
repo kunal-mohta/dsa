@@ -27,6 +27,7 @@ Learning Data Structures and Algorithms (major sources - hackerrank and CLRS)
         - Prim's
     - All-Pairs Shortest paths
         - Floyd-Warshall
+    - Warshall's Algorithm for transitive closure
 
 ## Classic Problems
 - Towers of Hanoi
