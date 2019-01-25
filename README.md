@@ -15,6 +15,7 @@ Learning Data Structures and Algorithms (major sources - hackerrank and CLRS)
     - Heap Sort
     - Quick Sort
     - Bucket Sort
+    - Merge Sort
 - Binary Searching
 - Bit Manipulation
     - Masking
