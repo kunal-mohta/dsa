@@ -192,10 +192,13 @@ void deleteNode (node **root, int val) {
 	node *toDelete = findNode(*root, val);
 
 	if (toDelete != NULL) {
+		node *startCheck;
+
 		// no children
 		if (toDelete->left == NULL && toDelete->right == NULL) {
 			if (toDelete->parent->left == toDelete) toDelete->parent->left = NULL;
 			else if (toDelete->parent->right == toDelete) toDelete->parent->right = NULL;
+			startCheck = toDelete->parent;
 			free(toDelete);
 		}
 		// one child
@@ -203,12 +206,14 @@ void deleteNode (node **root, int val) {
 			if (toDelete->parent->left == toDelete) toDelete->parent->left = toDelete->left;
 			else if (toDelete->parent->right == toDelete) toDelete->parent->right = toDelete->left;
 			toDelete->left->parent = toDelete->parent;
+			startCheck = toDelete->left;
 			free(toDelete);
 		}
 		else if (toDelete->right != NULL && toDelete->left == NULL) {
 			if (toDelete->parent->left == toDelete) toDelete->parent->left = toDelete->right;
 			else if (toDelete->parent->right == toDelete) toDelete->parent->right = toDelete->right;
 			toDelete->right->parent = toDelete->parent;
+			startCheck = toDelete->right;
 			free(toDelete);
 		}
 		// two children
@@ -217,9 +222,55 @@ void deleteNode (node **root, int val) {
 			int succVal = succ->val;
 			deleteNode(root, succ->val);
 			toDelete->val = succ->val;
+			startCheck = toDelete;
 		}
 
 		updateHeight(*root);
+
+		int isBalanced = 0;
+//		node *prepreunbalanced = NULL;
+//		node *preunbalanced = NULL;
+		node *unbalanced = startCheck;
+
+		while (abs(unbalanced->lHeight - unbalanced->rHeight) <= 1) {
+//			prepreunbalanced = preunbalanced;
+//			preunbalanced = unbalanced;
+			unbalanced = unbalanced->parent;
+			if (unbalanced == NULL) {
+				isBalanced = 1;
+				break;
+			}
+		}
+
+		if (!isBalanced) {
+			if (unbalanced->lHeight >= unbalanced->rHeight) {
+				if (unbalanced->left->lHeight >= unbalanced->left->rHeight) {
+					// left left
+					printf("\ndel: left left\n");
+					rotateRight(root, unbalanced->left);
+				}
+				else {
+					// left right
+					printf("\ndel: left right\n");
+					rotateLeft(root, unbalanced->left->right);
+					rotateRight(root, unbalanced->left);
+				}
+			}
+			else {
+				if (unbalanced->right->lHeight >= unbalanced->right->rHeight) {
+					// right right
+					printf("\ndel: right right\n");
+					rotateLeft(root, unbalanced->right);
+				}
+				else {
+					// right left
+					printf("\ndel: right left\n");
+					rotateRight(root, unbalanced->right->left);
+					rotateLeft(root, unbalanced->right);
+				}
+			}
+			updateHeight(*root);
+		}
 	}
 	else {
 		printf("\nNot found node to be deleted");
@@ -250,7 +301,7 @@ int main () {
 	insertNode(x, 13);
 	insertNode(x, 12);
 
-	deleteNode(x,33);
+	deleteNode(x, 34);
 
 	printf("\n\nin order");
 	inorderTraversal(root);

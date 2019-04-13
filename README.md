@@ -9,6 +9,7 @@ Learning Data Structures and Algorithms (major sources - hackerrank and CLRS)
 - Hash Tables
 - Trees
     - Binary Search Trees
+    - AVL Trees
 
 ## Algorithms
 - Sorting
