@@ -44,6 +44,48 @@ int updateHeight (node *root) {
 	}
 }
 
+void rotateRight (node **root, node *x) {
+	node *xParent = x->parent; // original parent of x
+	// parent stuff
+	x->parent = x->parent->parent;
+	if (xParent->parent != NULL) {
+		if (xParent->parent->left == xParent) xParent->parent->left = x;
+		else xParent->parent->right = x;
+	}
+
+	// right child stuff
+	xParent->left = x->right;
+	if (x->right != NULL) x->right->parent = xParent;
+	x->right = xParent;
+	xParent->parent = x;
+
+	if (*root == xParent) {
+		*root = x;
+	}
+}
+
+void rotateLeft (node **root, node *x) {
+//	printf("\n%d : %d", x->val, x->parent->parent->val);
+	node *xParent = x->parent; // original parent of x
+
+	// parent stuff
+	x->parent = x->parent->parent;
+	if (xParent->parent != NULL) {
+		if (xParent->parent->left == xParent) xParent->parent->left = x;
+		else xParent->parent->right = x;
+	}
+
+	// left child stuff
+	xParent->right = x->left;
+	if (x->left != NULL) x->left->parent = xParent;
+	x->left = xParent;
+	xParent->parent = x;
+
+	if (*root == xParent) {
+		*root = x;
+	}
+}
+
 void insertNode (node **root, int val) {
 	node *toInsert = createNode(val);
 
@@ -96,19 +138,28 @@ void insertNode (node **root, int val) {
 			if (preunbalanced == unbalanced->left && prepreunbalanced == preunbalanced->left) {
 				// left left
 				printf("\nleft left\n");
+				rotateRight(root, preunbalanced);
 			}
 			else if (preunbalanced == unbalanced->left && prepreunbalanced == preunbalanced->right) {
 				// left right
 				printf("\nleft right\n");
+				rotateLeft(root, prepreunbalanced);
+//				printf("\nhere %d", prepreunbalanced->parent->val);
+				rotateRight(root, prepreunbalanced);
 			}
 			if (preunbalanced == unbalanced->right && prepreunbalanced == preunbalanced->right) {
 				// right right
 				printf("\nright right\n");
+				rotateLeft(root, preunbalanced);
 			}
 			if (preunbalanced == unbalanced->right && prepreunbalanced == preunbalanced->left) {
 				// right left
 				printf("\nright left\n");
+				rotateRight(root, prepreunbalanced);
+				rotateLeft(root, prepreunbalanced);
 			}
+
+			updateHeight(*root);
 		}
 	}
 }
@@ -119,19 +170,29 @@ void inorderTraversal (node *root) {
 	if (root->right != NULL) inorderTraversal(root->right);
 }
 
+void preorderTraversal (node *root) {
+	printf("\n%d", root->val);
+	if (root->left != NULL) preorderTraversal(root->left);
+	if (root->right != NULL) preorderTraversal(root->right);
+}
+
 int main () {
 	node *root;
 	node **x = &root;
 	*x = NULL;
 
 	insertNode(x, 23);
-//	insertNode(x, 34);
-//	insertNode(x, 33);
-//	insertNode(x, 6);
-	insertNode(x, 12);
+	insertNode(x, 34);
+	insertNode(x, 33);
+	insertNode(x, 6);
 	insertNode(x, 13);
+	insertNode(x, 12);
 
+	printf("\n\nin order");
 	inorderTraversal(root);
 
-	printf("\n\n%d\n\n", abs(-43));
+	printf("\n\npre order");
+	preorderTraversal(root);
+
+//	printf("\n\n%d\n\n", root->right->left->val);
 }
