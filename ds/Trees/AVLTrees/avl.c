@@ -164,6 +164,68 @@ void insertNode (node **root, int val) {
 	}
 }
 
+node *findNode (node *root, int val) {
+	node *tmp = root;
+
+	while (tmp != NULL && tmp->val != val) {
+		if (val < tmp->val) tmp = tmp->left;
+		else tmp = tmp->right;
+	}
+	return tmp;
+}
+
+node *successor (node *root, int val) {
+	node *succOf = findNode(root, val);
+
+	if (succOf->right != NULL) return succOf->right;
+	else {
+		node *tmp = succOf;
+		while (tmp != NULL && tmp->parent != NULL && tmp->parent->right == tmp) {
+			tmp = tmp->parent;
+		}
+		if (tmp == NULL || tmp->parent == NULL) return NULL;
+		else return tmp->parent;
+	}
+}
+
+void deleteNode (node **root, int val) {
+	node *toDelete = findNode(*root, val);
+
+	if (toDelete != NULL) {
+		// no children
+		if (toDelete->left == NULL && toDelete->right == NULL) {
+			if (toDelete->parent->left == toDelete) toDelete->parent->left = NULL;
+			else if (toDelete->parent->right == toDelete) toDelete->parent->right = NULL;
+			free(toDelete);
+		}
+		// one child
+		else if (toDelete->left != NULL && toDelete->right == NULL) {
+			if (toDelete->parent->left == toDelete) toDelete->parent->left = toDelete->left;
+			else if (toDelete->parent->right == toDelete) toDelete->parent->right = toDelete->left;
+			toDelete->left->parent = toDelete->parent;
+			free(toDelete);
+		}
+		else if (toDelete->right != NULL && toDelete->left == NULL) {
+			if (toDelete->parent->left == toDelete) toDelete->parent->left = toDelete->right;
+			else if (toDelete->parent->right == toDelete) toDelete->parent->right = toDelete->right;
+			toDelete->right->parent = toDelete->parent;
+			free(toDelete);
+		}
+		// two children
+		else {
+			node *succ = successor(*root, val);
+			int succVal = succ->val;
+			deleteNode(root, succ->val);
+			toDelete->val = succ->val;
+		}
+
+		updateHeight(*root);
+	}
+	else {
+		printf("\nNot found node to be deleted");
+	}
+}
+
 void inorderTraversal (node *root) {
 	if (root->left != NULL) inorderTraversal(root->left);
 	printf("\n%d", root->val);
@@ -188,11 +250,13 @@ int main () {
 	insertNode(x, 13);
 	insertNode(x, 12);
 
+	deleteNode(x,33);
+
 	printf("\n\nin order");
 	inorderTraversal(root);
 
 	printf("\n\npre order");
 	preorderTraversal(root);
 
-//	printf("\n\n%d\n\n", root->right->left->val);
+//	printf("\n\n%d\n\n", successor(root, 33)->val);
 }

@@ -1,3 +1,3 @@
 run:
-	gcc -o avl.o avl.c
-	./avl.o
+	gcc -o avl.out avl.c
+	./avl.out
