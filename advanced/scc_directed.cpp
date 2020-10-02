@@ -40,7 +40,7 @@ void dfs (int u) {
 void dfsutil (int u) {
 	comp.push_back(u);
 	vis2[u] = true;
-	for (int v : graph[u]) {
+	for (int v : revgraph[u]) {
 		if (!vis2[v]) {
 			dfsutil(v);
 		}
