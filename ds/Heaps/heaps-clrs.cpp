@@ -4,7 +4,7 @@
  */
 
 // This file's functions are included in dsa/algos/heapsort-clrs.cpp
-//No problem in keeping the header files as they won't we read twice (I think, because preprocessing gives the same number of lines when including the header files more than once)
+//No problem in keeping the header files as they won't be read twice (I think, as preprocessing gives the same number of lines when including the header files more than once)
 
 #include<iostream>
 #include<vector>
